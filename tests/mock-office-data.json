@@ -1,0 +1,233 @@
+{
+  "mockOfficeContext": {
+    "platform": "PC",
+    "host": "Outlook",
+    "requirements": {
+      "sets": [
+        {
+          "name": "Mailbox",
+          "minVersion": "1.1"
+        }
+      ]
+    },
+    "mailbox": {
+      "item": {
+        "itemType": "Appointment",
+        "itemId": "AAMkAGU3Y2FhOTVhLWE1ZjktNDQzYy04OGQ5LTgzZTMzZGU4M2Y4NgBGAAAAAAC4G8K7FfmDRqCjJMkRKG2TBwB4oPFhUFqmQ...",
+        "subject": "製品企画会議 - 2024年第3四半期レビュー",
+        "start": "2024-09-15T14:00:00.000Z",
+        "end": "2024-09-15T16:00:00.000Z",
+        "organizer": {
+          "emailAddress": "yamada.taro@contoso.com",
+          "name": "山田 太郎"
+        },
+        "requiredAttendees": [
+          {
+            "emailAddress": "yamada.taro@contoso.com",
+            "name": "山田 太郎"
+          },
+          {
+            "emailAddress": "sato.hanako@contoso.com", 
+            "name": "佐藤 花子"
+          },
+          {
+            "emailAddress": "john.smith@external-company.com",
+            "name": "John Smith"
+          }
+        ],
+        "optionalAttendees": [
+          {
+            "emailAddress": "jane.doe@partner-corp.com",
+            "name": "Jane Doe"
+          }
+        ],
+        "resources": [
+          {
+            "emailAddress": "conference-room-a@contoso.com",
+            "name": "会議室A"
+          }
+        ],
+        "location": {
+          "displayName": "本社 会議室A"
+        },
+        "body": {
+          "contentType": "HTML",
+          "content": "<div>製品企画に関する第3四半期の振り返りと次期戦略について議論します。</div>"
+        }
+      }
+    },
+    "auth": {
+      "getAccessTokenAsync": {
+        "status": "succeeded",
+        "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik..."
+      }
+    }
+  },
+  "mockApiResponses": {
+    "sharePoint": {
+      "listItems": {
+        "d": {
+          "results": [
+            {
+              "Id": 1,
+              "MeetingId": "meeting_1694199600000_abc123def",
+              "MeetingTitle": "製品企画会議 - 2024年第3四半期レビュー",
+              "VisitorEmail": "john.smith@external-company.com",
+              "VisitorName": "John Smith",
+              "StartTime": "2024-09-15T14:00:00.000Z",
+              "EndTime": "2024-09-15T16:00:00.000Z",
+              "Status": "Scheduled",
+              "CreatedDate": "2024-09-01T10:30:00.000Z",
+              "ModifiedDate": "2024-09-01T10:30:00.000Z"
+            }
+          ]
+        }
+      },
+      "listInfo": {
+        "d": {
+          "Title": "LobbyVisitors",
+          "ItemCount": 15,
+          "Created": "2024-08-01T09:00:00.000Z"
+        }
+      },
+      "fields": {
+        "d": {
+          "results": [
+            {
+              "InternalName": "MeetingId",
+              "Title": "Meeting ID", 
+              "TypeAsString": "Text",
+              "Required": true
+            },
+            {
+              "InternalName": "MeetingTitle",
+              "Title": "Meeting Title",
+              "TypeAsString": "Text", 
+              "Required": true
+            },
+            {
+              "InternalName": "VisitorEmail",
+              "Title": "Visitor Email",
+              "TypeAsString": "Text",
+              "Required": true
+            }
+          ]
+        }
+      }
+    },
+    "powerAutomate": {
+      "success": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": {
+          "success": true,
+          "message": "Notification sent successfully",
+          "notificationId": "notification_1694263200000_xyz789"
+        }
+      },
+      "error": {
+        "status": 400,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "body": {
+          "success": false,
+          "error": "Invalid request format"
+        }
+      }
+    }
+  },
+  "testUsers": {
+    "internal": [
+      {
+        "emailAddress": "yamada.taro@contoso.com",
+        "name": "山田 太郎",
+        "department": "企画部"
+      },
+      {
+        "emailAddress": "sato.hanako@contoso.com", 
+        "name": "佐藤 花子",
+        "department": "営業部"
+      },
+      {
+        "emailAddress": "tanaka.jiro@contoso.com",
+        "name": "田中 次郎", 
+        "department": "開発部"
+      }
+    ],
+    "external": [
+      {
+        "emailAddress": "john.smith@external-company.com",
+        "name": "John Smith",
+        "company": "External Company Ltd."
+      },
+      {
+        "emailAddress": "jane.doe@partner-corp.com",
+        "name": "Jane Doe",
+        "company": "Partner Corp."
+      },
+      {
+        "emailAddress": "mike.wilson@client-firm.com", 
+        "name": "Mike Wilson",
+        "company": "Client Firm Inc."
+      }
+    ],
+    "rooms": [
+      {
+        "emailAddress": "conference-room-a@contoso.com",
+        "name": "会議室A",
+        "capacity": 10
+      },
+      {
+        "emailAddress": "conference-room-b@contoso.com",
+        "name": "会議室B", 
+        "capacity": 20
+      },
+      {
+        "emailAddress": "boardroom@contoso.com",
+        "name": "役員会議室",
+        "capacity": 15
+      }
+    ]
+  },
+  "mockEventData": [
+    {
+      "eventType": "recipients_changed",
+      "meetingId": "meeting_1694199600000_abc123def",
+      "subject": "製品企画会議 - 2024年第3四半期レビュー",
+      "startTime": "2024-09-15T14:00:00.000Z", 
+      "endTime": "2024-09-15T16:00:00.000Z",
+      "externalUsers": [
+        {
+          "emailAddress": "john.smith@external-company.com",
+          "name": "John Smith"
+        },
+        {
+          "emailAddress": "new.visitor@another-company.com",
+          "name": "New Visitor"
+        }
+      ]
+    },
+    {
+      "eventType": "time_changed",
+      "meetingId": "meeting_1694199600000_abc123def", 
+      "subject": "製品企画会議 - 2024年第3四半期レビュー",
+      "startTime": "2024-09-15T15:00:00.000Z",
+      "endTime": "2024-09-15T17:00:00.000Z", 
+      "externalUsers": [
+        {
+          "emailAddress": "john.smith@external-company.com",
+          "name": "John Smith"
+        }
+      ]
+    }
+  ],
+  "testConfiguration": {
+    "enableMocks": true,
+    "mockDelay": 1000,
+    "simulateErrors": false,
+    "logLevel": "debug"
+  }
+}

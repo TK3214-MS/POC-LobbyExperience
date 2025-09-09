@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby Experience</title>
+    
+    <!-- Office UI Fabric CSS -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            background-color: #f3f2f1;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0078d4, #106ebe);
+            color: white;
+            padding: 16px;
+            margin: -16px -16px 16px -16px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header p {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-connected { background-color: #107c10; }
+        .status-disconnected { background-color: #d13438; }
+        .status-unknown { background-color: #797775; }
+
+        .meeting-info {
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 12px;
+            background-color: #faf9f8;
+        }
+
+        .meeting-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+        }
+
+        .meeting-detail {
+            margin: 4px 0;
+            font-size: 12px;
+            color: #605e5c;
+        }
+
+        .external-users {
+            margin-top: 8px;
+        }
+
+        .external-user {
+            background-color: #deecf9;
+            border: 1px solid #c7e0f4;
+            border-radius: 3px;
+            padding: 4px 8px;
+            margin: 2px 4px 2px 0;
+            display: inline-block;
+            font-size: 11px;
+            color: #0078d4;
+        }
+
+        .button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 4px 8px 4px 0;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: #106ebe;
+        }
+
+        .button:disabled {
+            background-color: #a19f9d;
+            cursor: not-allowed;
+        }
+
+        .button.secondary {
+            background-color: #edebe9;
+            color: #323130;
+        }
+
+        .button.secondary:hover {
+            background-color: #e1dfdd;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #605e5c;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 2px solid #edebe9;
+            border-top: 2px solid #0078d4;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .message.success {
+            background-color: #dff6dd;
+            border: 1px solid #92c5f7;
+            color: #107c10;
+        }
+
+        .message.error {
+            background-color: #fde7e9;
+            border: 1px solid #d13438;
+            color: #a4262c;
+        }
+
+        .message.warning {
+            background-color: #fff4ce;
+            border: 1px solid #ffb900;
+            color: #8a8886;
+        }
+
+        .log {
+            max-height: 120px;
+            overflow-y: auto;
+            background-color: #f8f8f8;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #323130;
+        }
+
+        .log-entry {
+            margin-bottom: 2px;
+        }
+
+        .log-entry.info { color: #0078d4; }
+        .log-entry.warn { color: #ffb900; }
+        .log-entry.error { color: #d13438; }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+            padding: 8px;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0078d4;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #605e5c;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .settings-label {
+            font-size: 12px;
+            color: #323130;
+            font-weight: 600;
+        }
+
+        .settings-value {
+            font-size: 11px;
+            color: #605e5c;
+            background-color: #f8f8f8;
+            padding: 4px 8px;
+            border-radius: 2px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Lobby Experience</h1>
+        <p>来訪者管理システム</p>
+    </div>
+
+    <!-- メッセージエリア -->
+    <div id="messageArea"></div>
+
+    <!-- ローディング -->
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        処理中...
+    </div>
+
+    <!-- 現在の会議情報 -->
+    <div class="section">
+        <h2>現在の会議</h2>
+        <div id="currentMeeting">
+            <p style="color: #605e5c; font-style: italic;">会議情報を読み込み中...</p>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+            <button id="refreshMeetingBtn" class="button">
+                🔄 情報を更新
+            </button>
+            <button id="processVisitorsBtn" class="button" disabled>
+                👥 来訪者を処理
+            </button>
+        </div>
+    </div>
+
+    <!-- サービス状態 -->
+    <div class="section">
+        <h2>サービス状態</h2>
+        <div>
+            <div style="margin-bottom: 8px;">
+                <span id="sharepointStatus" class="status-indicator status-unknown"></span>
+                SharePoint Online: <span id="sharepointStatusText">未接続</span>
+            </div>
+            <div style="margin-bottom: 8px;">
+                <span id="powerAutomateStatus" class="status-indicator status-unknown"></span>
+                Power Automate: <span id="powerAutomateStatusText">未接続</span>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+            <button id="testConnectionBtn" class="button secondary">
+                🔍 接続をテスト
+            </button>
+        </div>
+    </div>
+
+    <!-- 統計情報 -->
+    <div class="section">
+        <h2>統計情報 (過去7日間)</h2>
+        <div id="statistics" class="stats">
+            <div class="stat-item">
+                <span id="totalVisitors" class="stat-number">-</span>
+                <span class="stat-label">総来訪者数</span>
+            </div>
+            <div class="stat-item">
+                <span id="scheduledVisitors" class="stat-number">-</span>
+                <span class="stat-label">予定済み</span>
+            </div>
+            <div class="stat-item">
+                <span id="completedVisitors" class="stat-number">-</span>
+                <span class="stat-label">完了済み</span>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+            <button id="refreshStatsBtn" class="button secondary">
+                📊 統計を更新
+            </button>
+        </div>
+    </div>
+
+    <!-- 設定情報 -->
+    <div class="section">
+        <h2>設定情報</h2>
+        <div id="settingsInfo" class="settings-grid">
+            <!-- 動的に生成される -->
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+            <button id="refreshConfigBtn" class="button secondary">
+                ⚙️ 設定を再読み込み
+            </button>
+        </div>
+    </div>
+
+    <!-- 活動ログ -->
+    <div class="section">
+        <h2>活動ログ</h2>
+        <div id="activityLog" class="log">
+            <div class="log-entry info">アドインが開始されました</div>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+            <button id="clearLogBtn" class="button secondary">
+                🗑️ ログをクリア
+            </button>
+        </div>
+    </div>
+
+    <!-- ヘルプ・情報 -->
+    <div class="section">
+        <h2>ヘルプ・情報</h2>
+        <div style="font-size: 12px; color: #605e5c;">
+            <p><strong>使用方法：</strong></p>
+            <ul style="margin: 8px 0; padding-left: 20px;">
+                <li>Outlookで会議を作成または編集します</li>
+                <li>外部参加者を追加します</li>
+                <li>「来訪者を処理」ボタンをクリックします</li>
+                <li>SharePointリストに来訪者情報が登録されます</li>
+                <li>Power Automateで自動通知が送信されます</li>
+            </ul>
+            <p><strong>トラブルシューティング：</strong></p>
+            <ul style="margin: 8px 0; padding-left: 20px;">
+                <li>設定ファイル(config.json)を確認してください</li>
+                <li>SharePoint/Power Automateの接続をテストしてください</li>
+                <li>活動ログでエラーを確認してください</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Office.js -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    
+    <!-- アプリケーションスクリプト -->
+    <script type="module" src="./taskpane.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+{
+  "testPayloads": {
+    "newVisitorNotification": {
+      "meetingId": "meeting_1694199600000_abc123def",
+      "meetingTitle": "製品企画会議 - 2024年第3四半期レビュー", 
+      "visitorEmail": "john.smith@external-company.com",
+      "visitorName": "John Smith",
+      "startTime": "2024-09-15T14:00:00.000Z",
+      "endTime": "2024-09-15T16:00:00.000Z",
+      "notificationType": "created",
+      "timestamp": "2024-09-01T10:30:00.000Z",
+      "source": "LobbyExperienceAddin"
+    },
+    "updatedVisitorNotification": {
+      "meetingId": "meeting_1694199600000_abc123def",
+      "meetingTitle": "【時間変更】製品企画会議 - 2024年第3四半期レビュー",
+      "visitorEmail": "john.smith@external-company.com", 
+      "visitorName": "John Smith",
+      "startTime": "2024-09-15T15:00:00.000Z",
+      "endTime": "2024-09-15T17:00:00.000Z",
+      "notificationType": "updated",
+      "timestamp": "2024-09-05T14:20:00.000Z",
+      "source": "LobbyExperienceAddin"
+    },
+    "cancelledVisitorNotification": {
+      "meetingId": "meeting_1694372400000_ghi789jkl",
+      "meetingTitle": "パートナー戦略会議",
+      "visitorEmail": "sarah.wilson@strategic-partner.com",
+      "visitorName": "Sarah Wilson",
+      "startTime": null,
+      "endTime": null,
+      "notificationType": "cancelled",
+      "timestamp": "2024-09-10T16:30:00.000Z",
+      "source": "LobbyExperienceAddin"
+    },
+    "testConnectionPayload": {
+      "test": true,
+      "timestamp": "2024-09-09T12:00:00.000Z",
+      "source": "LobbyExperienceAddin",
+      "message": "Connection test from Outlook Add-in"
+    }
+  },
+  "expectedResponses": {
+    "success": {
+      "status": 200,
+      "body": {
+        "success": true,
+        "message": "Notification processed successfully",
+        "notificationId": "notification_1694263200000_xyz789"
+      }
+    },
+    "error": {
+      "status": 400,
+      "body": {
+        "success": false,
+        "error": "Invalid request format",
+        "details": "Missing required field: visitorEmail"
+      }
+    }
+  },
+  "notificationTemplates": {
+    "emailSubjects": {
+      "created": "【来訪予定】{{meetingTitle}} のお知らせ",
+      "updated": "【変更通知】{{meetingTitle}} の詳細が変更されました", 
+      "cancelled": "【キャンセル】{{meetingTitle}} が中止になりました"
+    },
+    "emailBody": {
+      "created": "{{visitorName}} 様\n\n下記の会議にご参加いただく予定です。\n\n■ 会議情報\n・件名: {{meetingTitle}}\n・開始時刻: {{startTime}}\n・終了時刻: {{endTime}}\n\nご来社の際は、1階受付にお声かけください。\n\nよろしくお願いいたします。",
+      "updated": "{{visitorName}} 様\n\n下記の会議の詳細が変更されました。\n\n■ 変更後の会議情報\n・件名: {{meetingTitle}}\n・開始時刻: {{startTime}}\n・終了時刻: {{endTime}}\n\nご確認のほど、よろしくお願いいたします。", 
+      "cancelled": "{{visitorName}} 様\n\n下記の会議がキャンセルされました。\n\n■ 会議情報\n・件名: {{meetingTitle}}\n\nご迷惑をおかけして申し訳ございません。"
+    },
+    "teamsMessage": {
+      "created": "新しい来訪者が予定されました。\n\n👤 来訪者: {{visitorName}} ({{visitorEmail}})\n📅 会議: {{meetingTitle}}\n⏰ 時間: {{startTime}} - {{endTime}}",
+      "updated": "来訪予定が変更されました。\n\n👤 来訪者: {{visitorName}} ({{visitorEmail}})\n📅 会議: {{meetingTitle}}\n⏰ 新しい時間: {{startTime}} - {{endTime}}",
+      "cancelled": "来訪予定がキャンセルされました。\n\n👤 来訪者: {{visitorName}} ({{visitorEmail}})\n📅 会議: {{meetingTitle}}"
+    }
+  },
+  "testScenarios": [
+    {
+      "name": "基本的な新規通知",
+      "description": "新しい外部ユーザーの来訪通知を送信",
+      "payload": "newVisitorNotification",
+      "expectedStatus": 200
+    },
+    {
+      "name": "会議情報変更通知", 
+      "description": "会議時間や内容の変更通知を送信",
+      "payload": "updatedVisitorNotification", 
+      "expectedStatus": 200
+    },
+    {
+      "name": "会議キャンセル通知",
+      "description": "会議キャンセルの通知を送信",
+      "payload": "cancelledVisitorNotification",
+      "expectedStatus": 200
+    },
+    {
+      "name": "接続テスト",
+      "description": "Power Automate フローへの接続確認",
+      "payload": "testConnectionPayload", 
+      "expectedStatus": 200
+    }
+  ]
+}

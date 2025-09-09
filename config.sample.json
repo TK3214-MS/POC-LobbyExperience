@@ -1,0 +1,23 @@
+{
+  "sharePoint": {
+    "siteUrl": "https://yourcompany.sharepoint.com/sites/yoursite",
+    "listName": "LobbyVisitors",
+    "clientId": "your-azure-app-client-id",
+    "tenantId": "your-tenant-id"
+  },
+  "powerAutomate": {
+    "notificationUrl": "https://prod-xx.eastus.logic.azure.com:443/workflows/xxxxxxxx/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xxxxxxxxx",
+    "timeout": 30000
+  },
+  "outlook": {
+    "internalDomains": [
+      "yourcompany.com",
+      "subsidiary.com"
+    ],
+    "excludeRooms": true
+  },
+  "logging": {
+    "level": "info",
+    "enableConsole": true
+  }
+}

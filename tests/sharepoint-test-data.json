@@ -1,0 +1,117 @@
+{
+  "sampleVisitorRecords": [
+    {
+      "Id": 1,
+      "MeetingId": "meeting_1694199600000_abc123def",
+      "MeetingTitle": "製品企画会議 - 2024年第3四半期レビュー",
+      "VisitorEmail": "john.smith@external-company.com",
+      "VisitorName": "John Smith",
+      "StartTime": "2024-09-15T14:00:00.000Z",
+      "EndTime": "2024-09-15T16:00:00.000Z",
+      "Status": "Scheduled",
+      "CreatedDate": "2024-09-01T10:30:00.000Z",
+      "ModifiedDate": "2024-09-01T10:30:00.000Z"
+    },
+    {
+      "Id": 2,
+      "MeetingId": "meeting_1694199600000_abc123def", 
+      "MeetingTitle": "製品企画会議 - 2024年第3四半期レビュー",
+      "VisitorEmail": "jane.doe@partner-corp.com",
+      "VisitorName": "Jane Doe",
+      "StartTime": "2024-09-15T14:00:00.000Z",
+      "EndTime": "2024-09-15T16:00:00.000Z", 
+      "Status": "Scheduled",
+      "CreatedDate": "2024-09-01T10:30:00.000Z",
+      "ModifiedDate": "2024-09-01T10:30:00.000Z"
+    },
+    {
+      "Id": 3,
+      "MeetingId": "meeting_1694286000000_def456ghi",
+      "MeetingTitle": "クライアント打ち合わせ - 新システム導入について",
+      "VisitorEmail": "michael.brown@client-company.com",
+      "VisitorName": "Michael Brown",
+      "StartTime": "2024-09-16T10:00:00.000Z",
+      "EndTime": "2024-09-16T12:00:00.000Z",
+      "Status": "Completed", 
+      "CreatedDate": "2024-08-28T15:45:00.000Z",
+      "ModifiedDate": "2024-09-16T12:15:00.000Z"
+    },
+    {
+      "Id": 4,
+      "MeetingId": "meeting_1694372400000_ghi789jkl",
+      "MeetingTitle": "パートナー戦略会議",
+      "VisitorEmail": "sarah.wilson@strategic-partner.com",
+      "VisitorName": "Sarah Wilson",
+      "StartTime": "2024-09-17T15:00:00.000Z",
+      "EndTime": "2024-09-17T17:00:00.000Z",
+      "Status": "Cancelled",
+      "CreatedDate": "2024-09-05T09:20:00.000Z",
+      "ModifiedDate": "2024-09-10T16:30:00.000Z"
+    }
+  ],
+  "listSchema": {
+    "fields": [
+      {
+        "InternalName": "MeetingId",
+        "Title": "Meeting ID",
+        "TypeAsString": "Text",
+        "Required": true
+      },
+      {
+        "InternalName": "MeetingTitle", 
+        "Title": "Meeting Title",
+        "TypeAsString": "Text",
+        "Required": true
+      },
+      {
+        "InternalName": "VisitorEmail",
+        "Title": "Visitor Email",
+        "TypeAsString": "Text", 
+        "Required": true
+      },
+      {
+        "InternalName": "VisitorName",
+        "Title": "Visitor Name",
+        "TypeAsString": "Text",
+        "Required": false
+      },
+      {
+        "InternalName": "StartTime",
+        "Title": "Start Time",
+        "TypeAsString": "DateTime",
+        "Required": true
+      },
+      {
+        "InternalName": "EndTime", 
+        "Title": "End Time",
+        "TypeAsString": "DateTime",
+        "Required": true
+      },
+      {
+        "InternalName": "Status",
+        "Title": "Status",
+        "TypeAsString": "Choice",
+        "Required": false,
+        "Choices": ["Scheduled", "Completed", "Cancelled"]
+      },
+      {
+        "InternalName": "CreatedDate",
+        "Title": "Created Date", 
+        "TypeAsString": "DateTime",
+        "Required": false
+      },
+      {
+        "InternalName": "ModifiedDate",
+        "Title": "Modified Date",
+        "TypeAsString": "DateTime",
+        "Required": false
+      }
+    ]
+  },
+  "testQueries": {
+    "getAllRecords": "$select=Id,MeetingId,MeetingTitle,VisitorEmail,VisitorName,StartTime,EndTime,Status,CreatedDate,ModifiedDate",
+    "getByMeetingId": "$filter=MeetingId eq 'meeting_1694199600000_abc123def'",
+    "getScheduledVisitors": "$filter=Status eq 'Scheduled'",
+    "getRecentRecords": "$filter=CreatedDate ge datetime'2024-09-01T00:00:00Z'&$orderby=CreatedDate desc"
+  }
+}

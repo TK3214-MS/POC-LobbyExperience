@@ -1,0 +1,61 @@
+{
+  "meetingId": "meeting_1694199600000_abc123def",
+  "subject": "製品企画会議 - 2024年第3四半期レビュー",
+  "startTime": "2024-09-15T14:00:00.000Z",
+  "endTime": "2024-09-15T16:00:00.000Z",
+  "allAttendees": [
+    {
+      "emailAddress": "yamada.taro@contoso.com",
+      "name": "山田 太郎",
+      "recipientType": "required"
+    },
+    {
+      "emailAddress": "sato.hanako@contoso.com", 
+      "name": "佐藤 花子",
+      "recipientType": "required"
+    },
+    {
+      "emailAddress": "john.smith@external-company.com",
+      "name": "John Smith",
+      "recipientType": "required"
+    },
+    {
+      "emailAddress": "jane.doe@partner-corp.com",
+      "name": "Jane Doe", 
+      "recipientType": "optional"
+    },
+    {
+      "emailAddress": "conference-room-a@contoso.com",
+      "name": "会議室A",
+      "recipientType": "resource"
+    }
+  ],
+  "externalUsers": [
+    {
+      "emailAddress": "john.smith@external-company.com",
+      "name": "John Smith",
+      "recipientType": "required"
+    },
+    {
+      "emailAddress": "jane.doe@partner-corp.com",
+      "name": "Jane Doe",
+      "recipientType": "optional"
+    }
+  ],
+  "organizer": {
+    "emailAddress": "yamada.taro@contoso.com",
+    "name": "山田 太郎"
+  },
+  "location": {
+    "displayName": "本社 会議室A",
+    "address": {
+      "street": "1-1-1 丸の内",
+      "city": "千代田区",
+      "state": "東京都",
+      "postalCode": "100-0005",
+      "countryOrRegion": "日本"
+    }
+  },
+  "isOnlineMeeting": false,
+  "sensitivity": "normal"
+}

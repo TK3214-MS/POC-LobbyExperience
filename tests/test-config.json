@@ -1,0 +1,23 @@
+{
+  "sharePoint": {
+    "siteUrl": "https://contoso.sharepoint.com/sites/test",
+    "listName": "LobbyVisitorsTest",
+    "clientId": "12345678-1234-1234-1234-123456789abc",
+    "tenantId": "87654321-4321-4321-4321-cba987654321"
+  },
+  "powerAutomate": {
+    "notificationUrl": "https://prod-xx.eastus.logic.azure.com:443/workflows/12345678-1234-1234-1234-123456789abc/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=test-signature",
+    "timeout": 30000
+  },
+  "outlook": {
+    "internalDomains": [
+      "contoso.com",
+      "contoso-subsidiary.com"
+    ],
+    "excludeRooms": true
+  },
+  "logging": {
+    "level": "debug",
+    "enableConsole": true
+  }
+}
